@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
       attributes: ["product_name", "price", "stock", "category_id"],
     },
   })
-    .then((dbTagData) => res.join(dbTagData))
+    .then((dbTagData) => res.json(dbTagData))
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -59,7 +59,7 @@ router.put("/:id", (req, res) => {
   })
     .then((dbTagData) => {
       if (!dbTagData) {
-        res.status(404).json({ message: "I did not find a tag with this id" });
+        res.status(404).json({ message: "No tag found with this id" });
         return;
       }
       res.json(dbTagData);
@@ -79,7 +79,7 @@ router.delete("/:id", (req, res) => {
   })
     .then((dbTagData) => {
       if (!dbTagData) {
-        res.status(404).json({ message: "I did not find a tag with that id" });
+        res.status(404).json({ message: "No tag found with this id" });
         return;
       }
       res.json(dbTagData);

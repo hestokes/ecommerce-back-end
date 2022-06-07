@@ -25,7 +25,29 @@ router.get("/", (req, res) => {
     });
 });
 
-//add find One prodcut category id value
+router.get("/:id", (req, res) => {
+  // finding  one category by its `id` value
+  Category.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: {
+      model: Product,
+      attributes: ["id", "product_name", "price", "stock", "category_id"],
+    },
+  })
+    .then((dbCategoryData) => {
+      if (!dbCategoryData) {
+        res.status(404).json({ message: "No categories found" });
+        return;
+      }
+      res.json(dbCategoryData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 router.post("/", (req, res) => {
   // create a new category
